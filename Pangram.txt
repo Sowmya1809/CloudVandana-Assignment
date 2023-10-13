@@ -1,0 +1,40 @@
+public class PangramChecker {
+
+    public static boolean isPangram(String input) 
+    {
+        boolean[] letterPresent = new boolean[26];
+        input = input.toLowerCase();
+        for (char c : input.toCharArray()) 
+        {
+            if (Character.isLetter(c)) 
+            {
+                letterPresent[c - 'a'] = true;
+            }
+        }
+
+        for (boolean present : letterPresent) 
+        
+        {
+            if (!present) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    
+    public static void main(String[] args) 
+    {
+        String sentence = "Brown jars prevented the mixture from freezing too quickly";
+        boolean isPangram = isPangram(sentence);
+        if (isPangram) 
+        {
+            System.out.println("The input is a pangram.");
+        } 
+        else 
+        {
+            System.out.println("The input is not a pangram.");
+        }
+    }
+}
+

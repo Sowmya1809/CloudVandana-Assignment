@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        
+        .calculator {
+            width: 300px;
+            margin: 0 auto;
+            border: 2px solid #333;
+            padding: 10px;
+        }
+        
+        .result {
+            font-size: 24px;
+        }
+        
+        .button {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <div class="result" id="result">0</div>
+        <div>
+            <button class="button" onclick="appendToResult('7')">7</button>
+            <button class="button" onclick="appendToResult('8')">8</button>
+            <button class="button" onclick="appendToResult('9')">9</button>
+            <button class="button" onclick="performOperation('+')">+</button>
+        </div>
+        <div>
+            <button class="button" onclick="appendToResult('4')">4</button>
+            <button class="button" onclick="appendToResult('5')">5</button>
+            <button class="button" onclick="appendToResult('6')">6</button>
+            <button class="button" onclick="performOperation('-')">-</button>
+        </div>
+        <div>
+            <button class="button" onclick="appendToResult('1')">1</button>
+            <button class="button" onclick="appendToResult('2')">2</button>
+            <button class="button" onclick="appendToResult('3')">3</button>
+            <button class="button" onclick="performOperation('*')">*</button>
+        </div>
+        <div>
+            <button class="button" onclick="appendToResult('0')">0</button>
+            <button class="button" onclick="performOperation('/')">/</button>
+            <button class="button" onclick="calculateResult()">=</button>
+        </div>
+        <div>
+            <button class="button" onclick="clearResult()">C</button>
+        </div>
+    </div>
+
+    <script>
+        let currentResult = "0";
+        let operator = "";
+        let prevResult = "0";
+        
+        function appendToResult(value) {
+            if (currentResult === "0" || currentResult === prevResult) {
+                currentResult = value;
+            } else {
+                currentResult += value;
+            }
+            document.getElementById("result").innerText = currentResult;
+        }
+        
+        function performOperation(op) {
+            if (operator !== "") {
+                calculateResult();
+            }
+            operator = op;
+            prevResult = currentResult;
+            currentResult = "0";
+        }
+        
+        function calculateResult() {
+            if (operator === "" || currentResult === "0") {
+                return;
+            }
+            const num1 = parseFloat(prevResult);
+            const num2 = parseFloat(currentResult);
+        
+            switch (operator) {
+                case '+':
+                    currentResult = (num1 + num2).toString();
+                    break;
+                case '-':
+                    currentResult = (num1 - num2).toString();
+                    break;
+                case '*':
+                    currentResult = (num1 * num2).toString();
+                    break;
+                case '/':
+                    if (num2 === 0) {
+                        currentResult = "Error";
+                    } else {
+                        currentResult = (num1 / num2).toString();
+                    }
+                    break;
+            }
+        
+            operator = "";
+            prevResult = currentResult;
+            document.getElementById("result").innerText = currentResult;
+        }
+        
+        function clearResult() {
+            currentResult = "0";
+            operator = "";
+            prevResult = "0";
+            document.getElementById("result").innerText = currentResult;
+        }
+    </script>
+</body>
+
+</html>
